@@ -1,4 +1,4 @@
-# CI CD Knowledge
+# CI/CD Knowledge
 
 ## Git flow
 ## Github Action
