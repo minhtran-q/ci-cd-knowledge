@@ -114,3 +114,11 @@
   <br/>
 
 </details>
+<details>
+  <summary>Security for CI/CD pipeline</summary>
+  <br/>
+  
+  + Store sensitive information like API keys, tokens, and passwords in GitHub Secrets.
+  + Integrate security tools like CodeQL, Snyk, or Gitleaks to automatically scan your code for vulnerabilities.
+
+</details>
