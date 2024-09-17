@@ -26,3 +26,32 @@
 </details>
 
 ### Using Github Actions
+
+<details>
+  <summary>Use and manage Secrets</summary>
+  <br/>
+  
+  **Manage:**
+  
+  1. Go to your repository on GitHub.
+  2. Click on the **Settings** tab.
+  3. In the left sidebar, click on **Secrets and variables > Actions**.
+  4. Click on **New repository secret**.
+  5. Add a name for your secret and its value, then click Add secret.
+
+  **Use:**
+
+  To use a secret in your workflow, reference it in your YAML file like this:
+  ```
+  jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use secret
+      run: echo ${{ secrets.MY_SECRET }}
+  ```
+  
+</details>
