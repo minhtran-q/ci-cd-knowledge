@@ -82,5 +82,29 @@
   <summary>Caching</summary>
   <br/>
 
+  Caching in GitHub Actions is a mechanism that allows you to store and reuse files or data between workflow runs.
+
+  1. **Cache Creation:** During a workflow run, you can create a cache by specifying a unique key. This key is used to identify the cache.
+  2. **Cache Storage:** The cache is stored on GitHub’s servers.
+  3. **Cache Restoration:** In subsequent workflow runs, the cache can be restored using the same key, allowing you to reuse the stored data.
+
+  ```
+  name: Java CI
+
+  on: [push, pull_request]
+  
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+  
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+  ```
+  _The actions/cache@v3 action caches the Maven dependencies located in the ~/.m2/repository directory._
 
 </details>
