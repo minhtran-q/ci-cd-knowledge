@@ -28,7 +28,7 @@
 ### Using Github Actions
 
 <details>
-  <summary>Use and manage Secrets</summary>
+  <summary>Managing Secrets</summary>
   <br/>
   
   **Manage:**
@@ -53,5 +53,29 @@
     - name: Use secret
       run: echo ${{ secrets.MY_SECRET }}
   ```
-  
+
+  _Note:_ Always use secrets for sensitive information like API keys, tokens, and passwords.
 </details>
+
+<details>
+  <summary>Managing Environment Variables</summary>
+  <br/>
+
+  **Environment-Specific Variables:** Navigate to **Settings > Environments**, create an environment.
+  **Environment Variables in Workflow:** You can define environment variables directly in your workflow file.
+
+  ```
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      env:
+        MY_VARIABLE: 'value'
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Use environment variable
+        run: echo $MY_VARIABLE
+  ```
+</details>
+
