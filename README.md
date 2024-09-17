@@ -115,6 +115,36 @@
 
 </details>
 <details>
+  <summary>Parallel Jobs</summary>
+  <br/>
+
+  You can define multiple jobs within the jobs section of your workflow YAML file.
+
+  ```
+  name: Parallel Jobs Example
+
+  on: [push]
+  
+  jobs:
+    job1:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Run tests
+          run: echo "Running tests for job1"
+  
+    job2:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Build project
+          run: echo "Building project for job2"
+  ```
+
+</details>
+<details>
   <summary>Security for CI/CD pipeline</summary>
   <br/>
   
