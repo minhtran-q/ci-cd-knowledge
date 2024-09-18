@@ -154,3 +154,14 @@
 </details>
 
 ### Github Actions with ECS
+
+<details>
+  <summary>Setup ECS on AWS</summary>
+  <br/>
+  
+</details>
+<details>
+  <summary>Setup CI/CD</summary>
+  <br/>
+  
+</details>
