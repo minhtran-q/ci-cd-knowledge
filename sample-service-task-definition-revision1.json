@@ -1,0 +1,67 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:733312614671:task-definition/sample-service-task-definition:1",
+    "containerDefinitions": [
+        {
+            "name": "sample-service",
+            "image": "733312614671.dkr.ecr.ap-southeast-1.amazonaws.com/4testing/sample-service:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "sample-service-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "systemControls": []
+        }
+    ],
+    "family": "sample-service-task-definition",
+    "taskRoleArn": "arn:aws:iam::733312614671:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::733312614671:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-09-28T17:47:59.553Z",
+    "registeredBy": "arn:aws:iam::733312614671:user/tqminh",
+    "tags": []
+}
