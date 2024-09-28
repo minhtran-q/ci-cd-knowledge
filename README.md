@@ -156,12 +156,118 @@
 ### Github Actions with ECS
 
 <details>
-  <summary>Setup ECS on AWS</summary>
+  <summary>Setup ECS & ECR</summary>
   <br/>
+
+  1. Create an ECR Repository
+  2. Create an ECS Cluster
+  3. Dockerize Java Application
+    + Create a Dockerfile: This file will define how to build your Docker image.
+    ```
+    FROM openjdk:17-jdk-alpine
+    COPY target/sample-service*.jar app.jar
+    ENTRYPOINT ["java","-jar","/app.jar"]
+    ```
+  4. Create access key from user. (_there are several ways to get credentails from AWS_)
+  5. Create ECS Task Definition (![]())
+  6. Finally, we create github actions workflow.
   
 </details>
 <details>
   <summary>Setup CI/CD</summary>
   <br/>
+
+  ```
+name: Java CI with SonarQube
+
+on:
+  push:
+    branches:
+      - lite_version
+      - ecs_version
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get commit message
+        id: get_commit_message
+        run: echo "::set-output name=message::$(git log -1 --pretty=%B)"
+
+      - name: Check commit message
+        if: contains(steps.get_commit_message.outputs.message, 'Build CI')
+        run: echo "Commit message contains the trigger phrase!"
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Run tests and generate JaCoCo report
+        run: mvn test jacoco:report
   
+      - name: Publish JaCoCo report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
+          
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'true'
+          
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: my-java-app
+          image: ${{ steps.ecr-login.outputs.registry }}/my-java-app:latest
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: my-java-app-service
+          cluster: my-cluster
+          wait-for-service-stability: true
+  ```
 </details>
