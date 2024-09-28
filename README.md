@@ -161,16 +161,17 @@
 
   1. Create an ECR Repository
   2. Create an ECS Cluster
-  3. Dockerize Java Application
-    + Create a Dockerfile: This file will define how to build your Docker image.
-    ```
+  3. Dockerize Java Application (_Create a Dockerfile_)
+  5. Create access key from user. (_there are several ways to get credentails from AWS_)
+  6. Create ECS Task Definition ([Task definition sample file](sample-service-task-definition-revision1.json))
+  7. Finally, we create github actions workflow.
+
+  ```
     FROM openjdk:17-jdk-alpine
     COPY target/sample-service*.jar app.jar
     ENTRYPOINT ["java","-jar","/app.jar"]
-    ```
-  4. Create access key from user. (_there are several ways to get credentails from AWS_)
-  5. Create ECS Task Definition (![]())
-  6. Finally, we create github actions workflow.
+  ```
+  _This file will define how to build your Docker image._
   
 </details>
 <details>
