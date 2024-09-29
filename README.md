@@ -17,7 +17,7 @@
   + **Hotfix Branches:** Created from the `main` branch to quickly address critical issues in production. Once fixed, changes are merged back into both `main` and `develop`.
 </details>
 <details>
-  <summary>Supporting Branches</summary>
+  <summary>Workflow</summary>
   <br/>
   
   + **Initialization:** Start by creating the `develop` branch from `main`.
