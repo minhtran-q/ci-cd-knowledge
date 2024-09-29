@@ -1,6 +1,32 @@
 # CI/CD Knowledge
 
-## Git flow
+## Gitflow
+<details>
+  <summary>Main branches</summary>
+  <br/>
+  
+  + **Main:** This branch contains the production-ready code. All releases are tagged here.
+  + **Develop:** This branch serves as an integration branch for features. It contains the latest delivered development changes for the next release.
+</details>
+<details>
+  <summary>Supporting Branches</summary>
+  <br/>
+  
+  + **Feature Branches:** Created from the `develop` branch, these branches are used to `develop` new features. Once a feature is complete, it is merged back into `develop`.
+  + **Release Branches:** Created from the `develop` branch when a set of features is ready for a release. This branch allows for final testing and bug fixing before merging into `main` and `develop`.
+  + **Hotfix Branches:** Created from the `main` branch to quickly address critical issues in production. Once fixed, changes are merged back into both `main` and `develop`.
+</details>
+<details>
+  <summary>Supporting Branches</summary>
+  <br/>
+  
+  + **Initialization:** Start by creating the `develop` branch from `main`.
+  + **Feature Development:** Developers create feature branches from `develop`, work on their features, and merge them back into `develop` when done.
+  + **Release Preparation:** When ready for a release, create a release branch from `develop`, perform final testing and fixes, then merge into both `main` and `develop`.
+  + **Hotfixes:** For urgent fixes, create a hotfix branch from `main`, apply the fix, and merge back into both `main` and `develop`.
+  
+</details>
+
 ## Github Action
 ### Architecture
 
